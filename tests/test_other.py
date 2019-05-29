@@ -3841,13 +3841,12 @@ int main()
       }
     ''', [[3, 2], 1, 1])
 
-  @no_wasm_backend('relies on --emit-symbol-map')
   def test_symbol_map(self):
     for gen_map in [0, 1]:
       for wasm in [0, 1]:
         print(gen_map, wasm)
         self.clear()
-        cmd = [PYTHON, EMCC, path_from_root('tests', 'hello_world.c'), '-O2']
+        cmd = [PYTHON, EMCC, path_from_root('tests', 'hello_world.c'), '-O3']
         if gen_map:
           cmd += ['--emit-symbol-map']
         if not wasm:

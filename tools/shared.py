@@ -2513,8 +2513,7 @@ class Building(object):
     # will see the internals, do so
     if not Settings.LINKABLE:
       # if we are optimizing for size, shrink the combined wasm+JS
-      # TODO: support this when a symbol map is used
-      if expensive_optimizations and not emit_symbol_map:
+      if expensive_optimizations:
         js_file = Building.metadce(js_file, wasm_file, minify_whitespace=minify_whitespace, debug_info=debug_info)
         # now that we removed unneeded communication between js and wasm, we can clean up
         # the js some more.
