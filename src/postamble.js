@@ -407,13 +407,8 @@ function abort(what) {
 #if USE_PTHREADS
   if (ENVIRONMENT_IS_PTHREAD) console.error('Pthread aborting at ' + new Error().stack);
 #endif
-  if (what !== undefined) {
-    out(what);
-    err(what);
-    what = '"' + what + '"';
-  } else {
-    what = '';
-  }
+
+  err(what);
 
   ABORT = true;
   EXITSTATUS = 1;
@@ -421,8 +416,7 @@ function abort(what) {
 #if ASSERTIONS == 0
   throw 'abort(' + what + '). Build with -s ASSERTIONS=1 for more info.';
 #else
-  var extra = '';
-  var output = 'abort(' + what + ') at ' + stackTrace() + extra;
+  var output = 'abort(' + what + ') at ' + stackTrace();
   if (abortDecorators) {
     abortDecorators.forEach(function(decorator) {
       output = decorator(output, what);
