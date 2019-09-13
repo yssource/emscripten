@@ -9806,3 +9806,9 @@ Module.arguments has been replaced with plain arguments_
     # don't actually exist in our standard library path.  Make sure we don't
     # error out when linking with these flags.
     run_process([PYTHON, EMCC, path_from_root('tests', 'hello_world.cpp'), '-lm', '-ldl', '-lrt', '-lpthread'])
+
+  def test_nostdlib(self):
+    self.assertContained('undefined symbol:', self.expect_fail([PYTHON, EMCC, path_from_root('tests', 'hello_world.c'), '-nostdlib']))
+    self.assertContained('undefined symbol:', self.expect_fail([PYTHON, EMCC, path_from_root('tests', 'hello_world.c'), '-nodefaultlibs']))
+    run_process([PYTHON, EMCC, path_from_root('tests', 'hello_world.c'), '-nostdlib', '-lc', '-lcompiler_rt'])
+    run_process([PYTHON, EMCC, path_from_root('tests', 'hello_world.c'), '-nodefaultlibs', '-lc', '-lcompiler_rt'])
